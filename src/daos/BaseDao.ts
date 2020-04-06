@@ -1,5 +1,5 @@
 import { Schema, SchemaDefinition } from 'mongoose';
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 
 export interface BaseDto {
 
@@ -9,7 +9,6 @@ export interface BaseDto {
     modifiedBy: string
 }
 
-@injectable()
 export class BaseSchema<T = any> extends Schema {
 
     constructor(definition?: SchemaDefinition) {
@@ -29,15 +28,16 @@ export class BaseSchema<T = any> extends Schema {
 
         if(definition && definition != null) {
 
-            return { ...definition, baseSchemaFields };
+            return { ...definition, ...baseSchemaFields };
         }
         else {
 
             return baseSchemaFields;
-        }
+        }  
     }
 }
 
+@injectable()
 export abstract class BaseDao {
 
     //all collections

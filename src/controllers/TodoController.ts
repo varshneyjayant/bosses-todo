@@ -38,8 +38,16 @@ export class TodoController {
         const todo = <Todo>req.body;
         todo.createdBy = Authentication.getSessionUserIdFromRequest(req);
 
-        const todos = await this.todoService.addTodo(todo);
-        res.status(OK).json(ServiceResponseProvider.createServiceResponse(todos));
+        try{
+
+            const todos = await this.todoService.addTodo(todo);
+            res.status(OK).json(ServiceResponseProvider.createServiceResponse(todos));
+        }
+        catch(err){
+
+            ErrorHandlerMiddleware.handleError(err, req, res, null);
+        }
+        
     }
 
     @Get("")
@@ -48,8 +56,15 @@ export class TodoController {
 
         const ownerId = Authentication.getSessionUserIdFromRequest(req);
         
-        const todos = await this.todoService.getTodos(ownerId);
-        res.status(OK).json(ServiceResponseProvider.createServiceResponse(todos));
+        try{
+
+            const todos = await this.todoService.getTodos(ownerId);
+            res.status(OK).json(ServiceResponseProvider.createServiceResponse(todos));
+        }
+        catch(err){
+
+            ErrorHandlerMiddleware.handleError(err, req, res, null);
+        }
     }
 
     @Put("")
@@ -64,8 +79,15 @@ export class TodoController {
         const todo = <Todo>req.body;
         todo.modifiedBy = Authentication.getSessionUserIdFromRequest(req);
 
-        const todos = await this.todoService.updateTodo(todo);
-        res.status(OK).json(ServiceResponseProvider.createServiceResponse(todos));
+        try{
+
+            const todos = await this.todoService.updateTodo(todo);
+            res.status(OK).json(ServiceResponseProvider.createServiceResponse(todos));
+        }
+        catch(err){
+
+            ErrorHandlerMiddleware.handleError(err, req, res, null);
+        }
     }
 
     @Delete(":todoId")
@@ -75,7 +97,14 @@ export class TodoController {
         const todoId = req.params.todoId;
         const ownerId = Authentication.getSessionUserIdFromRequest(req);
 
-        const todos = await this.todoService.removeTodo(todoId, ownerId);
-        res.status(OK).json(ServiceResponseProvider.createServiceResponse(todos)); 
+        try{
+            
+            const todos = await this.todoService.removeTodo(todoId, ownerId);
+            res.status(OK).json(ServiceResponseProvider.createServiceResponse(todos));
+        }
+        catch(err){
+
+            ErrorHandlerMiddleware.handleError(err, req, res, null);
+        }
     }
 }

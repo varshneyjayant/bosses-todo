@@ -8,23 +8,36 @@ import { UserService } from '../users/UserService';
 import { TYPES } from '../app/Types';
 import { OK } from 'http-status-codes';
 import { ServiceResponseProvider } from '../app/ServiceResponse';
+import { RequestJSONValidatorMiddleware, ValidationOptions } from '../middlewares/RequestJSONValidator';
+import { AddUserValidator } from '../validators/UserValidator';
 
 @injectable()
-@Controller("secure/user")
+@Controller("user")
 @ClassErrorMiddleware(ErrorHandlerMiddleware.handleError)
-@ClassMiddleware(JwtManager.middleware)
 export class UserController {
 
     @inject(TYPES.UserService)
     private userService: UserService;
 
     @Post("")
+    @Middleware(RequestJSONValidatorMiddleware.validateBody(<ValidationOptions>{
+        schemaType: AddUserValidator
+    }))
     private async addUser(req: ISecureRequest, res: Response) {
 
         const user = <User>req.body;
         user.createdBy = "ROOT";
 
-        const userId = await this.userService.addUser(user);
-        res.status(OK).json(ServiceResponseProvider.createServiceResponse(userId));
+        try{
+
+            const userId = await this.userService.addUser(user);
+            res.status(OK).json(ServiceResponseProvider.createServiceResponse(userId));
+        }
+        catch(err){
+
+            ErrorHandlerMiddleware.handleError(err, req, res, null);
+        }
+
+        
     }
 }

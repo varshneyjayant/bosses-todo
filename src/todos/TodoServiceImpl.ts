@@ -46,8 +46,7 @@ export class TodoServiceImpl implements TodoService {
         if(dbActionResponse.err != null) throw new ServiceError(dbActionResponse.err);
         else{
 
-            console.log(dbActionResponse.data);
-            return todos;
+            return dbActionResponse.data;
         }
     }
 
@@ -57,7 +56,7 @@ export class TodoServiceImpl implements TodoService {
         todoDto.modifiedOn = Date.now();
 
         //lets us check if todo exists
-        if(await this.checkIfTodoExists(todo.todoId, todo.createdBy)) {
+        if(await this.checkIfTodoExists(todo.todoId, todo.modifiedBy)) {
 
             //now update todo
             const dbActionResponse_update = await this.todoDao.updateTodo(todoDto);
@@ -65,7 +64,7 @@ export class TodoServiceImpl implements TodoService {
             if(dbActionResponse_update.err != null) throw new ServiceError(dbActionResponse_update.err);
             else {
 
-                return await this.getTodos(todo.createdBy);
+                return await this.getTodos(todo.modifiedBy);
             }
         }
         else{

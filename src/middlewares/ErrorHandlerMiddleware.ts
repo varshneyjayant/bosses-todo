@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ValidationError } from 'express-json-validator-middleware';
 import { INTERNAL_SERVER_ERROR, UNAUTHORIZED, BAD_REQUEST } from 'http-status-codes';
 import { RequestJSONValidatorMiddleware } from './RequestJSONValidator';
+import { Logger, LoggerFactory } from '../logger/Logger';
 
 
 export interface ErrorResponse {
@@ -63,6 +64,8 @@ export class ServiceError extends Error {
 
 export class ErrorHandlerMiddleware {
 
+    private static logger:Logger = LoggerFactory.getLogger(ErrorHandlerMiddleware.name);
+
     static handleError(error: Error, req: Request, res: Response, next: NextFunction) {
 
         const errorResponse = <ErrorResponse> {
@@ -116,6 +119,8 @@ export class ErrorHandlerMiddleware {
                 }
                 break;
             }
+
+            ErrorHandlerMiddleware.logger.error(error);
         }
 
         res.status(errorResponse.status).json(errorResponse);

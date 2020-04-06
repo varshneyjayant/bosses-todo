@@ -20,6 +20,9 @@ export class UserServiceImpl implements UserService {
 
         userDto.userId = uuidv4();
         userDto.password = EncryptionUtils.getEncryptedValue(user.password);
+        
+        //adding hardcoded role for now
+        userDto.role = "Todo_Access";
 
         const dbResponse = await this.userDao.addUser(userDto);
 

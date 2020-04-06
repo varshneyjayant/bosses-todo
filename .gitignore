@@ -9,3 +9,6 @@ build/
 
 #logs
 logs/
+
+#local debugger config
+.vscode/
