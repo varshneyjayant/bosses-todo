@@ -34,7 +34,8 @@ export class DbHandler {
 
             await mongoose.connect(dbPath, {
                 useUnifiedTopology: true,
-                useNewUrlParser: true
+                useNewUrlParser: true,
+                useCreateIndex: true
             });
 
             mongoose.pluralize(null);
