@@ -1,0 +1,8 @@
+#exclude node_modules
+node_modules/
+
+#DS Stores
+**/*/.DS_Store
+
+#build folder
+build/
