@@ -1,6 +1,9 @@
 # bosses-todo
 Keeps the todo list of pointy haired boss
 
+![Travis Build Summary](https://travis-ci.org/varshneyjayant/bosses-todo.svg?branch=master)
+
+
 ### Major Dependencies
 
 - Typescript
