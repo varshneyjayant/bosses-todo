@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+    - 12
+before_install:
+    - "npm install -g typescript"
+    - "npm install -g mocha"
+install:
+    - mkdir build
+    - mkdir logs
+    - npm install
+    - tsc
+script:
+    - npm run test

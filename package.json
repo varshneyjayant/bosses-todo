@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha build/tests/service/UserService.test.js build/tests/service/TodoService.test.js build/tests/service/AuthenticationService.test.js --exit",
-    "play": "nodemon build/index.js",
+    "play": "node build/index.js",
     "prod": "node build/index.js --production",
     "build": "tsc"
   },
