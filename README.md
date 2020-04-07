@@ -17,6 +17,15 @@ Keeps the todo list of pointy haired boss
 - Jsonwebtoken
 
 
+
+Navigate to the root directory of the app and create following directories.
+
+```
+mkdir build
+mkdir logs
+```
+
+
 ### Commands to run
 
 - Build Code: `npm run build`
