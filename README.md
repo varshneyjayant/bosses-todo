@@ -1,6 +1,9 @@
 # bosses-todo
 Keeps the todo list of pointy haired boss
 
+![Travis Build Summary](https://travis-ci.org/varshneyjayant/bosses-todo.svg?branch=master)
+
+
 ### Major Dependencies
 
 - Typescript
@@ -12,6 +15,15 @@ Keeps the todo list of pointy haired boss
 - Inversify
 - Winston
 - Jsonwebtoken
+
+
+
+Navigate to the root directory of the app and create following directories.
+
+```
+mkdir build
+mkdir logs
+```
 
 
 ### Commands to run
