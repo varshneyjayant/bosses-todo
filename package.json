@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha build/tests/service/UserService.test.js build/tests/service/TodoService.test.js build/tests/service/AuthenticationService.test.js --exit",
     "play": "node build/index.js",
-    "prod": "NODE_ENV=production node/build/index.js app.js",
+    "prod": "NODE_ENV=production node build/index.js app.js",
     "build": "tsc"
   },
   "repository": {
