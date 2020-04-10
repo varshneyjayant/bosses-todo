@@ -27,7 +27,7 @@ export class AuthenticationServiceImpl implements AuthenticationService {
             if(user != null) {
 
                 //now we will compare passwords
-                if(EncryptionUtils.comparePlainTextWithEncryptedValue(password, user.password)) {
+                if(await EncryptionUtils.comparePlainTextWithEncryptedValue(password, user.password)) {
 
                     authResult.data = <SessionUser> {
 

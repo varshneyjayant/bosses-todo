@@ -19,7 +19,7 @@ export class UserServiceImpl implements UserService {
         const userDto: UserDto = <UserDto>user;
 
         userDto.userId = uuidv4();
-        userDto.password = EncryptionUtils.getEncryptedValue(user.password);
+        userDto.password = await EncryptionUtils.getEncryptedValue(user.password);
         
         //adding hardcoded role for now
         userDto.role = "Todo_Access";

@@ -2,13 +2,13 @@ import bcrypt from 'bcrypt';
 
 export class EncryptionUtils {
 
-    static getEncryptedValue(plainText: string): string {
+    static async getEncryptedValue(plainText: string): Promise<string> {
 
-        return bcrypt.hashSync(plainText, 10);
+        return await bcrypt.hash(plainText, 10);
     }
 
-    static comparePlainTextWithEncryptedValue(plainText: string, encryptedText: string): boolean {
+    static async comparePlainTextWithEncryptedValue(plainText: string, encryptedText: string): Promise<boolean> {
 
-        return bcrypt.compareSync(plainText, encryptedText);
+        return await bcrypt.compare(plainText, encryptedText);
     }
 }
