@@ -1,4 +1,4 @@
-import { Controller, Post, ClassErrorMiddleware, ClassMiddleware, Middleware } from '@overnightjs/core';
+import { Controller, Post, ClassErrorMiddleware, ClassMiddleware, Middleware, Get } from '@overnightjs/core';
 import { ISecureRequest, JwtManager } from '@overnightjs/jwt';
 import { Response } from 'express';
 import { injectable, inject } from 'inversify';
@@ -10,6 +10,7 @@ import { OK } from 'http-status-codes';
 import { ServiceResponseProvider } from '../app/ServiceResponse';
 import { RequestJSONValidatorMiddleware, ValidationOptions } from '../middlewares/RequestJSONValidator';
 import { AddUserValidator } from '../validators/UserValidator';
+import jwt from 'express-jwt';
 
 @injectable()
 @Controller("user")

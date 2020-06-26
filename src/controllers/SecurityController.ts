@@ -1,10 +1,12 @@
-import { Controller, Post, ClassErrorMiddleware, Middleware } from '@overnightjs/core';
+import { Controller, Post, ClassErrorMiddleware, Middleware, Get } from '@overnightjs/core';
 import { Request, Response } from 'express';
 import { OK } from 'http-status-codes';
 import { ServiceResponseProvider } from './../app/ServiceResponse';
 import { injectable } from 'inversify';
 import {  ErrorHandlerMiddleware } from '../middlewares/ErrorHandlerMiddleware';
 import { LocalAuthenticationMiddleWare } from '../middlewares/LocalAuthenticationMiddleware';
+import {  ISecureRequest } from '@overnightjs/jwt';
+import { RESTAuthenticationMiddleware } from '../middlewares/RESTAuthenticationMiddleware';
 
 @injectable()
 @Controller("security")
@@ -17,4 +19,12 @@ export class SecurityController{
 
         return res.status(OK).json(ServiceResponseProvider.createServiceResponse("Login Success"));
     }
+
+    @Get("check")
+    @Middleware(RESTAuthenticationMiddleware.authenticate)
+    private userSessionHealthCheck(req: ISecureRequest, res: Response) {
+
+        return res.status(OK).send();
+    }
+    
 }

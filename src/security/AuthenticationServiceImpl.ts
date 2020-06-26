@@ -7,12 +7,15 @@ import { UserService } from '../users/UserService';
 import { EncryptionUtils } from '../utils/EncryptionUtils';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../app/Types';
+import { Logger, LoggerFactory } from '../logger/Logger';
 
 @injectable()
 export class AuthenticationServiceImpl implements AuthenticationService {
 
     @inject(TYPES.UserService)
     private userService: UserService;
+
+    private logger: Logger = LoggerFactory.getLogger(AuthenticationServiceImpl.name);
 
     async authenticateUserWithEmailAndPassword(email: string, password: string): Promise<AuthenticationResult> {
 
@@ -65,6 +68,9 @@ export class AuthenticationServiceImpl implements AuthenticationService {
             usernameField: "email",
             passwordField: "password",
         }, async (email: string, password: string, done: any) => {
+
+            this.logger.info('auth request received');
+            this.logger.info({ email, password });
 
             const authResult = await this.authenticateUserWithEmailAndPassword(email, password);
             done(authResult);

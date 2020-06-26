@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import cors from 'cors';
 import { AuthenticationService } from '../security/AuthenticationService';
 import { lazyInject, IocContainer } from '../../inversify.config';
 import { TYPES } from './Types';
@@ -35,6 +36,15 @@ export class App extends Server {
             this.logger.info('registering permanent middlewares...');
 
             this.app.use(cookieParser());
+            this.app.use(cors({
+                origin: (_origin, callback) => {
+
+                    return callback(null, {
+                        origin: true
+                    });
+                },
+                credentials: true
+            }));
             this.app.use(bodyParser.json());
             this.app.use(bodyParser.urlencoded({ extended: true }));
 

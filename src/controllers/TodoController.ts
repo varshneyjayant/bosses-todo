@@ -1,5 +1,5 @@
 import { Controller, Post, Put, Get, Delete, ClassErrorMiddleware, ClassMiddleware, Middleware } from '@overnightjs/core';
-import { ISecureRequest, JwtManager } from '@overnightjs/jwt';
+import { ISecureRequest } from '@overnightjs/jwt';
 import { Response } from 'express';
 import { injectable, inject } from 'inversify';
 import { ErrorHandlerMiddleware } from '../middlewares/ErrorHandlerMiddleware';
@@ -12,6 +12,7 @@ import { Todo } from '../todos/Todo';
 import { Authentication } from '../security/Authentication';
 import { ServiceResponseProvider } from '../app/ServiceResponse';
 import { OK } from 'http-status-codes';
+import { RESTAuthenticationMiddleware } from '../middlewares/RESTAuthenticationMiddleware';
 
 //makes this controller injectable
 @injectable()
@@ -20,7 +21,7 @@ import { OK } from 'http-status-codes';
 //register common route error middleware
 @ClassErrorMiddleware(ErrorHandlerMiddleware.handleError)
 //register common route middleware
-@ClassMiddleware(JwtManager.middleware)
+@ClassMiddleware(RESTAuthenticationMiddleware.authenticate)
 export class TodoController {
 
     @inject(TYPES.TodoService)
